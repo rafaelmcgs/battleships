@@ -1,0 +1,30 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:b2c9fdfa1233266c6468eef29ddd83f9:fd0a7bfe4aafcb970dbb64cf0332e521:a648c9cc3e5eec028a0a5679b2aa2f93$
+#
+:format=40300
+:texture=waterTile.png
+:size=1024x1024
+:pivotpoints=enabled
+:borders=disabled
+
+water_00;0;832;192;192; 0;1; 0;0;0;0
+water_02;192;832;192;192; 0;1; 0;0;0;0
+water_04;384;832;192;192; 0;1; 0;0;0;0
+water_06;576;832;192;192; 0;1; 0;0;0;0
+water_08;768;832;192;192; 0;1; 0;0;0;0
+water_10;0;640;192;192; 0;1; 0;0;0;0
+water_12;192;640;192;192; 0;1; 0;0;0;0
+water_14;384;640;192;192; 0;1; 0;0;0;0
+water_16;576;640;192;192; 0;1; 0;0;0;0
+water_18;768;640;192;192; 0;1; 0;0;0;0
+water_20;0;448;192;192; 0;1; 0;0;0;0
+water_22;192;448;192;192; 0;1; 0;0;0;0
+water_24;384;448;192;192; 0;1; 0;0;0;0
+water_26;576;448;192;192; 0;1; 0;0;0;0
+water_28;768;448;192;192; 0;1; 0;0;0;0
+water_30;0;256;192;192; 0;1; 0;0;0;0

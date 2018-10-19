@@ -1,0 +1,36 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:7aa2785914761ebe62595bddc36cf9a0:99d30e5cd4bcec4c40d80685ff43187f:71ce74092ddd12c974d1ad8fa497b04a$
+#
+:format=40300
+:texture=btn-pronto.png
+:size=1024x2048
+:pivotpoints=enabled
+:borders=disabled
+
+btn-pronto00;0;1898;474;150; 0;1; 0;0;0;0
+btn-pronto01;474;1898;474;150; 0;1; 0;0;0;0
+btn-pronto02;0;1748;474;150; 0;1; 0;0;0;0
+btn-pronto03;474;1748;474;150; 0;1; 0;0;0;0
+btn-pronto04;0;1598;474;150; 0;1; 0;0;0;0
+btn-pronto05;474;1598;474;150; 0;1; 0;0;0;0
+btn-pronto06;0;1448;474;150; 0;1; 0;0;0;0
+btn-pronto07;474;1448;474;150; 0;1; 0;0;0;0
+btn-pronto08;0;1298;474;150; 0;1; 0;0;0;0
+btn-pronto09;474;1298;474;150; 0;1; 0;0;0;0
+btn-pronto10;0;1148;474;150; 0;1; 0;0;0;0
+btn-pronto11;474;1148;474;150; 0;1; 0;0;0;0
+btn-pronto12;0;998;474;150; 0;1; 0;0;0;0
+btn-pronto13;474;998;474;150; 0;1; 0;0;0;0
+btn-pronto14;0;848;474;150; 0;1; 0;0;0;0
+btn-pronto15;474;848;474;150; 0;1; 0;0;0;0
+btn-pronto16;0;698;474;150; 0;1; 0;0;0;0
+btn-pronto17;474;698;474;150; 0;1; 0;0;0;0
+btn-pronto18;0;548;474;150; 0;1; 0;0;0;0
+btn-pronto19;474;548;474;150; 0;1; 0;0;0;0
+btn-pronto20;0;398;474;150; 0;1; 0;0;0;0
+btn-pronto21;474;398;474;150; 0;1; 0;0;0;0
