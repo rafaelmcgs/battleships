@@ -36,6 +36,8 @@ Programas utilizados no projeto:
 * Photoshop
 * Illustrator
 
+
 Prints:
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena1.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena2.jpg?raw=true)
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena3.jpg?raw=true)
