@@ -28,3 +28,7 @@ O projeto possuirá 3 cenas:
 * Batalha
 
 O projeto será desenvolvido para android e tela landscape fixa.
+
+Prints:
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena1.jpg?raw=true)
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena2.jpg?raw=true)
