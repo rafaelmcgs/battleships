@@ -3,9 +3,8 @@
 Clássico jogo de estratégia naval, onde os jogadores tentam acertar os navios do oponente no escuro.
 
 Nesta versão serão acrescentados novos tipos de ataques e navios.
-O jogo possuirá dois modos:
+O jogo possuirá um unico modo:
 * Duelo entre jogadores
-* Duelo contra maquina
 
 As regras serão:
 * Sempre **2** participantes
