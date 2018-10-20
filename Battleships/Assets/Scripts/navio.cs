@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class navio : MonoBehaviour
 {
+    public GameObject img;
     public GameObject quadGroup;
     public GameObject quadrado;
     public bool canDrag = true;
@@ -17,6 +18,7 @@ public class navio : MonoBehaviour
 
     [HideInInspector]
     public int coudown = 0;
+    public bool destroyed = false;
     
     private int managerId;
     private SetShipsManager manager;
@@ -37,8 +39,7 @@ public class navio : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-        quadrados = new GameObject[size];
-        createQuadrados();
+        createQuadrados(); //criar quadrados de fundo (aqueles verdes)
         
 
     }
@@ -155,6 +156,8 @@ public class navio : MonoBehaviour
     //funções relacionadas aos quadrados de fundo
     public void createQuadrados()
     {
+        if (quadrados != null) { return; }
+        quadrados = new GameObject[size];
         for (int i = 0; i < size; i++)
         {
             quadrados[i] = Instantiate(quadrado) as GameObject;
@@ -169,6 +172,19 @@ public class navio : MonoBehaviour
         var tempColor = image.color;
         tempColor.r = 1f;
         tempColor.g = 0f;
+        tempColor.b = 0f;
+        tempColor.a = 0.5f;
+        image.color = tempColor;
+
+    }
+    public void setQuadradoYellow(int num)
+    {
+        Image image = quadrados[num].GetComponent<Image>();
+        var tempColor = image.color;
+        tempColor.r = 1f;
+        tempColor.g = 1f;
+        tempColor.b = 0f;
+        tempColor.a = 0.5f;
         image.color = tempColor;
 
     }
@@ -184,9 +200,12 @@ public class navio : MonoBehaviour
         var tempColor = image.color;
         tempColor.r = 0f;
         tempColor.g = 1f;
+        tempColor.b = 0f;
+        tempColor.a = 0.5f;
         image.color = tempColor;
 
     }
+   
     public void hideQuadrados()
     {
         Image image;
@@ -202,7 +221,7 @@ public class navio : MonoBehaviour
             image.color = tempColor;
         }
     }
-    public void showQuadrados()
+    private void showQuadrados()
     {
         Image image;
         for (int i = 0; i < size; i++)
@@ -227,39 +246,30 @@ public class navio : MonoBehaviour
         }
         return false;
     }
-
-    public string getStringInfos()
+    public void setExposto(bool exposto_)
     {
-        /*
-         [
-             0 = size (o que define o tipo de navio)
-             1 = posicao X
-             2 = posicao Y
-             3 = posicao Vertical ( 0=horizontal | 1=vertical)
-             4 = coutdown
-             5 = array da vida dosquadrados
-         ]
-        */
-        string verticalTemp = "0";
-        if (getVertical())
-        {
-            verticalTemp = "1";
-        }
+            Image image;
+            for (int i = 0; i < size; i++)
+            {
+                image = quadrados[i].GetComponent<Image>();
+                var tempColor = image.color;
+            if (exposto_)
+            {
+                tempColor.a = 0.5f;
+                tempColor.r = 1f;
+                tempColor.g = 1f;
+                tempColor.b = 1f;
+            }
+            else
+            {
+                tempColor.a = 0f;
 
-        string quadradosLifeString = "";
-        for (int i=0;i<size;i++)
-        {
-            quadradosLifeString = quadradosLifeString + "15:";
-        }
-        quadradosLifeString = quadradosLifeString.Substring(0, quadradosLifeString.Length - 1);
-
-
-        string retorno = size.ToString() + "#" + getX().ToString() + "#" + getY().ToString() + "#" + verticalTemp + "#0#" + quadradosLifeString;
-
-
-
-        return retorno;
+            }
+                image.color = tempColor;
+            }
+        
     }
+
 
     //funções de interação
     public void beginDrag()
@@ -280,8 +290,8 @@ public class navio : MonoBehaviour
         {
             // estou trabalhando com local position, portanto eu corrigi o movimento em relação a escala do tabuleiro
             Vector3 temp = (Input.mousePosition - dragMousePosiInicial);
-            temp.x = temp.x * 100 / 65;
-            temp.y = temp.y * 100 / 65;
+            temp.x = temp.x;
+            temp.y = temp.y;
 
             // adiciono distancia pecorrida pelo mouse
             Vector3 tempPosi = dragObjectPosiInicial + temp;
@@ -314,5 +324,75 @@ public class navio : MonoBehaviour
         {
             girarNavio();
         }
+    }
+
+
+    //funções para setar e pegar infos
+    public string getStringInfos()
+    {
+        /*
+         [
+             0 = size (o que define o tipo de navio)
+             1 = posicao X
+             2 = posicao Y
+             3 = posicao Vertical ( 0=horizontal | 1=vertical)
+             4 = coutdown
+             5 = exposto ( 0=n | 1=s)
+             6 = destruido ( 0=n | 1=s)
+             7 = array da vida dosquadrados
+         ]
+        */
+        string verticalTemp = "0";
+        if (getVertical())
+        {
+            verticalTemp = "1";
+        }
+
+        string quadradosLifeString = "";
+        for (int i = 0; i < size; i++)
+        {
+            quadradosLifeString = quadradosLifeString + "15:";
+        }
+        quadradosLifeString = quadradosLifeString.Substring(0, quadradosLifeString.Length - 1);
+
+
+        string retorno = size.ToString() + "#" + getX().ToString() + "#" + getY().ToString() + "#" + verticalTemp + "#0#0#0#" + quadradosLifeString;
+
+
+
+        return retorno;
+    }
+
+    
+    public void setQuadByInfos(string infos)
+    {
+
+        string[] quadArray = infos.Split(':');
+        for (int i = 0; i < quadArray.Length; i++)
+        {
+            if (quadArray[i] == "0")
+            {
+                setQuadradoRed(i);
+            }
+            else if (quadArray[i] != "15")
+            {
+                setQuadradoYellow(i);
+            }
+        }
+    }
+    public void setDestroyed(bool destroyed_)
+    {
+        destroyed = destroyed_;
+        if (destroyed_)
+        {
+            Image image = img.GetComponent<Image>();
+            var tempColor = image.color;
+            tempColor.r = 0.2f;
+            tempColor.g = 0.2f;
+            tempColor.b = 0.2f;
+            image.color = tempColor;
+            
+        }
+
     }
 }

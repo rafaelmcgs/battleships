@@ -184,6 +184,7 @@ public class SetShipsManager : MonoBehaviour {
         }
         else
         {
+            PlayerPrefs.SetInt("turno", 1);
             SceneManager.LoadScene("Battle");
         }
 

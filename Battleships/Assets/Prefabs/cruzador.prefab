@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3612f56f5c13e3d4bb0e79f4755df2df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  img: {fileID: 1452195613658162}
   quadGroup: {fileID: 1397577702930700}
   quadrado: {fileID: 1752755186280306, guid: 9ce2b3adbc739b24484a5918185e7dc4, type: 2}
   canDrag: 1
@@ -161,6 +162,7 @@ MonoBehaviour:
   artilhariaPesada: 1
   bombardeio: 0
   coudown: 0
+  destroyed: 0
   isDraggin: 0
   doubleClickTimeCount: 0
 --- !u!114 &114940960722282184
