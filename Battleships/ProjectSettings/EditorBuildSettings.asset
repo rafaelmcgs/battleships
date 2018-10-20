@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/SetShips.unity
     guid: d75e90b8c229c3a41834b1f8966490bf
   - enabled: 1
-    path: Assets/Scenes/batalha.unity
+    path: Assets/Scenes/Battle.unity
     guid: 652cde956d123254287974651008c8e9
   m_configObjects: {}

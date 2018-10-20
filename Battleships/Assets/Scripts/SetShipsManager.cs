@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SetShipsManager : MonoBehaviour {
 
@@ -12,11 +14,18 @@ public class SetShipsManager : MonoBehaviour {
     public GameObject grid;
     public GameObject titulo;
     public GameObject texto;
+
+    public GameObject alerta;
     
     private GameObject[] naviosObjs;
 
+    private int playerNum = 1;
+
     private void Start()
     {
+        //
+        playerNum = PlayerPrefs.GetInt("turno",1);
+
         //registro os navios
         naviosObjs = GameObject.FindGameObjectsWithTag("Navios");
         navio navio;
@@ -68,6 +77,7 @@ public class SetShipsManager : MonoBehaviour {
         return quadrados;
     }
 
+    //verifica os efeitos do navio no tabuleiro
     public void SetShipPosition(int id)
     {
         navio navio;
@@ -106,8 +116,11 @@ public class SetShipsManager : MonoBehaviour {
         }
     }
     
+    //remove os efeitos do navio do tabuleiro
     public void RemoveShipPosition(int id) {
         navio navio;
+        Text textTemp = texto.GetComponent<Text>();
+        textTemp.text = "Senhor,\nPosicione sua frota arrastando os navios e para girar - los clique 2 vezes.";
 
         //defino os quadrados que eram ocupados pelo navio
         navio = naviosObjs[id].GetComponent<navio>();
@@ -134,5 +147,50 @@ public class SetShipsManager : MonoBehaviour {
                     }
             }
         }
+    }
+
+    //função para o click do pronto
+    public void finalizarPosicionamento()
+    {
+        //verificar se existe algum quadrado vermelho
+        navio navio;
+        for (int i = 0; i < naviosObjs.Length; i++)
+        {
+            navio = naviosObjs[i].GetComponent<navio>();
+            if (navio.hasQuadRed())
+            {
+                Text textTemp = texto.GetComponent<Text>();
+                textTemp.text = "Calma aí!\nÉ preciso organizar corretamente sua frota!\nCorrija para prosseguir!";
+                return;
+            }
+        }
+
+        //salvar informações
+        string playerShipsInfos = "";
+        for (int i = 0; i < naviosObjs.Length; i++)
+        {
+            navio = naviosObjs[i].GetComponent<navio>();
+            playerShipsInfos = playerShipsInfos + navio.getStringInfos() + "$";
+        }
+        playerShipsInfos = playerShipsInfos.Substring(0, playerShipsInfos.Length - 1);
+
+        PlayerPrefs.SetString("player"+ playerNum.ToString(), playerShipsInfos);
+
+        //verificar turno
+        if (playerNum ==1)
+        {
+            PlayerPrefs.SetInt("turno", 2);
+            alerta.SetActive(true);
+        }
+        else
+        {
+            SceneManager.LoadScene("Battle");
+        }
+
+    }
+    public void reloadScene()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 }

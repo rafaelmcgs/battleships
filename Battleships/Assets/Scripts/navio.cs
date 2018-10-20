@@ -214,6 +214,52 @@ public class navio : MonoBehaviour
         }
 
     }
+    public bool hasQuadRed()
+    {
+        Image image;
+        for (int i = 0; i < size; i++)
+        {
+            image = quadrados[i].GetComponent<Image>();
+            if (image.color.r == 1)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public string getStringInfos()
+    {
+        /*
+         [
+             0 = size (o que define o tipo de navio)
+             1 = posicao X
+             2 = posicao Y
+             3 = posicao Vertical ( 0=horizontal | 1=vertical)
+             4 = coutdown
+             5 = array da vida dosquadrados
+         ]
+        */
+        string verticalTemp = "0";
+        if (getVertical())
+        {
+            verticalTemp = "1";
+        }
+
+        string quadradosLifeString = "";
+        for (int i=0;i<size;i++)
+        {
+            quadradosLifeString = quadradosLifeString + "15:";
+        }
+        quadradosLifeString = quadradosLifeString.Substring(0, quadradosLifeString.Length - 1);
+
+
+        string retorno = size.ToString() + "#" + getX().ToString() + "#" + getY().ToString() + "#" + verticalTemp + "#0#" + quadradosLifeString;
+
+
+
+        return retorno;
+    }
 
     //funções de interação
     public void beginDrag()
