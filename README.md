@@ -18,8 +18,8 @@ As regras serão:
 * Os participantes atacarão **alternadamente em turnos** e em cada turno o jogador poderá lançar **quantos ataques quiser**, contanto que estejam **disponíveis**. Os ataques são:
   - **Artilharia Simples** - cooldown: 0 - tamanho: **1** - dano: somatório da quantidade de navios
   - **Míssil balístico** - só pode ser usado 1 vez por cada navio - tamanho: **3x3** - dano: 15 - expõe a localização do navio
-  - **Artilharia pesada** - cooldown: 1 - tamanho **1** - dano: 15
-  - **Bombardeio** - cooldown: 3 - tamanho **1x7** - dano: 15
+  - **Artilharia pesada** - cooldown: 2 - tamanho **1** - dano: 15
+  - **Bombardeio** - cooldown: 4 - tamanho **1x7** - dano: 15
 * O jogo acaba quando todos os **navios** de um jogador forem destruídos.
 
 O projeto possuirá 3 cenas:

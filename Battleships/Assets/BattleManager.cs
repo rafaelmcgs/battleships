@@ -7,6 +7,7 @@ public class BattleManager : MonoBehaviour
 {
     public GameObject tabuleiroMe;
     public GameObject tabuleiroEnemy;
+    public GameObject helperText;
 
     public GameObject attack1;
     public GameObject attack2;
@@ -19,10 +20,34 @@ public class BattleManager : MonoBehaviour
     public GameObject navio4Prefab;
     public GameObject navio5Prefab;
     public GameObject quadEnemy;
+    
+  
 
 
     private int playerNum;
     private GameObject[,] quadTabuleiroEnemy = new GameObject[15,15];
+
+    public int artilhariaPesadaDano;
+    public int artilhariaPesadaCountdown;
+    public int missilDano;
+    public int bombardeioDano;
+    public int bombardeioCountdown;
+    public int bombardeioTamanho;
+
+    [HideInInspector]
+    public int artilhariaSimplesDano = 0;
+    [HideInInspector]
+    public int missilMax = 0;
+    [HideInInspector]
+    public int artilhariaPesadaMax = 0;
+    [HideInInspector]
+    public int bombardeioMax = 0;
+
+    private int missilNow = 0;
+    private List<float> artilhariaPesadaNow = new List<float>();
+    private List<float> bombardeioNow = new List<float>();
+
+
 
 
     private GameObject tempShip; //utilizo para manusear prefabs, pois parece que não autoriza o uso de maneira local
@@ -34,16 +59,16 @@ public class BattleManager : MonoBehaviour
 
         playerNum = PlayerPrefs.GetInt("turno", 1);
 
-
+        //constroe tabuleiros
         colocarMeusNavios();
-
         popularTabuleiroEnemy();
         colocarMeusAtaques();
 
-        attack1.GetComponent<canhao>().SetShipsManager(this);
-        attack2.GetComponent<canhao>().SetShipsManager(this);
-        attack3.GetComponent<canhao>().SetShipsManager(this);
-        attack4.GetComponent<canhao>().SetShipsManager(this);
+
+        //configura ataques
+        AttacksConfigs();
+
+
 
     }
 	
@@ -51,6 +76,16 @@ public class BattleManager : MonoBehaviour
 	void Update () {
 		
 	}
+
+    //função para setar texto de ajuda
+    public void setText(string texto)
+    {
+        Text textTemp = helperText.GetComponent<Text>();
+        textTemp.text = texto;
+        
+    }
+
+    //funções de construção dos tabuleiros
     private void colocarMeusNavios()
     {
 
@@ -263,11 +298,92 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+   
+
+    //funções relacionadas aos ataques
     public void unselectAllAttacks()
     {
+        setText("Escolha um ataque!");
         attack1.GetComponent<canhao>().unSelect();
         attack2.GetComponent<canhao>().unSelect();
         attack3.GetComponent<canhao>().unSelect();
         attack4.GetComponent<canhao>().unSelect();
+    }
+    private void AttacksConfigs()
+    {
+
+        string[] myShipsInfos = PlayerPrefs.GetString("player" + playerNum.ToString()).Split('$');
+        string[] shipInfo;
+        float pct;
+
+
+        //inicializa ataques
+        attack1.GetComponent<canhao>().SetShipsManager(this);
+        attack2.GetComponent<canhao>().SetShipsManager(this);
+        attack3.GetComponent<canhao>().SetShipsManager(this);
+        attack4.GetComponent<canhao>().SetShipsManager(this);
+
+        
+
+        //coleta informações dos navios relevantes a configuração
+        for (int i = 0; i < myShipsInfos.Length; i++)
+        {
+            /*
+            [
+                0 = size (o que define o tipo de navio)
+                1 = posicao X
+                2 = posicao Y
+                3 = posicao Vertical ( 0=horizontal | 1=vertical)
+                4 = coutdown
+                5 = exposto ( 0=n | 1=s)
+                6 = destruido ( 0=n | 1=s)
+                7 = array da vida dosquadrados
+            ]
+            */
+            shipInfo = myShipsInfos[i].Split('#');
+            //shipInfo[4] = "1";
+
+            switch (int.Parse(shipInfo[0]))
+            {
+                case 2:
+                    artilhariaSimplesDano++;
+                break;
+                case 3:
+                    artilhariaSimplesDano++;
+                    missilMax++;
+                    if (int.Parse(shipInfo[4]) == 0)
+                    {
+                        missilNow++;
+                    }
+                    break;
+                case 4:
+                    artilhariaSimplesDano++;
+                    artilhariaPesadaMax++;
+
+                    pct = (float)(artilhariaPesadaCountdown - int.Parse(shipInfo[4])) / artilhariaPesadaCountdown;
+                    artilhariaPesadaNow.Add(pct);
+                    break;
+                case 5:
+                    artilhariaSimplesDano++;
+                    bombardeioMax++;
+
+                    pct = (float)(bombardeioCountdown - int.Parse(shipInfo[4])) / bombardeioCountdown;
+                    bombardeioNow.Add(pct);
+                    break;
+            }
+        }
+
+        //seta quantidade maxima de cartuchos ou barras
+        attack1.GetComponent<canhao>().setBarsQtd(1);
+        attack2.GetComponent<canhao>().setCartuchosQtd(missilMax);
+        attack3.GetComponent<canhao>().setBarsQtd(artilhariaPesadaMax);
+        attack4.GetComponent<canhao>().setBarsQtd(bombardeioMax);
+
+        //seta a quantidade
+        attack2.GetComponent<canhao>().removeCartuchos(missilMax- missilNow);
+        attack3.GetComponent<canhao>().setBarsValues(artilhariaPesadaNow);
+        attack4.GetComponent<canhao>().setBarsValues(bombardeioNow);
+
+
     }
 }

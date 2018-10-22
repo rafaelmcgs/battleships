@@ -31,7 +31,7 @@ public class navio : MonoBehaviour
     private Vector3 dragObjectPosiInicial;
 
     //variavel para identificar doubleClick
-    private float doubleClickTimeLimit = 0.25f;
+    private float doubleClickTimeLimit = 0.35f;
     public float doubleClickTimeCount = 0f;
 
 
