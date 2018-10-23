@@ -318,6 +318,7 @@ public class navio : MonoBehaviour
     }
     public void MouseDown()
     {
+        if (!canDrag) { return; }
         if (doubleClickTimeCount == 0)
         {
             doubleClickTimeCount = doubleClickTimeLimit;

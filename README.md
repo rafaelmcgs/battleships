@@ -19,7 +19,7 @@ As regras serão:
   - **Artilharia Simples** - cooldown: 0 - tamanho: **1** - dano: somatório da quantidade de navios
   - **Míssil balístico** - só pode ser usado 1 vez por cada navio - tamanho: **3x3** - dano: 15 - expõe a localização de uma fragata
   - **Artilharia pesada** - cooldown: 2 - tamanho **1** - dano: 15 - expoe a localização completa do navio inimigo
-  - **Bombardeio** - cooldown: 4 - tamanho **1x7** - dano: 15
+  - **Bombardeio** - cooldown: 2 - tamanho **1x7** - dano: 15
 * O jogo acaba quando todos os **navios** de um jogador forem destruídos.
 
 O projeto possuirá 3 cenas:
@@ -35,6 +35,8 @@ Programas utilizados no projeto:
 * TexturePacker
 * Photoshop
 * Illustrator
+* Audition
+* Premiere
 
 Nota para avaliador:
 * Para alterar a quantidade de navios no tabuleiro vá na cena **SetShips** e altere o GameObject **navios**.

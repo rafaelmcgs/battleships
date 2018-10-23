@@ -32,7 +32,6 @@ public class tabuleiroEnemy : MonoBehaviour
         isDraggin = true;
         dragMousePosiInicial = Input.mousePosition;
         mira.transform.position = Input.mousePosition;
-        mira.transform.SetAsLastSibling();
     }
     public void mouseEndDrag()
     {

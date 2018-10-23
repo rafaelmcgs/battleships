@@ -50,7 +50,7 @@ public class canhao : MonoBehaviour
             GetComponent<Image>().sprite = imageSelected;
             switch (tipo)
             {
-                case 1: manager.setText("Artilharia Simples (1x1)\nDano: "+manager.artilhariaSimplesDano.ToString()+" x Navios\n1 tiro por rodada"); break;
+                case 1: manager.setText("Artilharia Simples (1x1)\nDano: "+manager.artilhariaSimplesDano.ToString()+"\n1 tiro por rodada"); break;
                 case 2: manager.setText("Míssil balístico (3x3)\nDano: "+ manager.missilDano.ToString() + "\nDisparo Limitado\nExpõe uma fragata"); break;
                 case 3: manager.setText("Artilharia Pesada (1x1)\nDano: " + manager.artilhariaPesadaDano.ToString() + "\nCountdown: " + manager.artilhariaPesadaCountdown.ToString() + ""); break;
                 case 4: manager.setText("Bombardeio (1x" + manager.bombardeioTamanho.ToString() + ")\nDano: " + manager.bombardeioDano.ToString() + "\nCountdown: " + manager.bombardeioCountdown.ToString() + "\nSelecione duas pontas de uma reta"); break;
@@ -153,10 +153,12 @@ public class canhao : MonoBehaviour
             if (barsValues[i] == 1f)
             {
                 tempColor.g = 1f;
+                tempColor.r = 0f;
             }
             else
             {
                 tempColor.r = 1f;
+                tempColor.g = 0f;
 
             }
             image.color = tempColor;

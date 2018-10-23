@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
@@ -57,6 +58,9 @@ public class BattleManager : MonoBehaviour
     public GameObject navio5Prefab;
     public GameObject quadrado;
     public GameObject Explosao;
+    public GameObject audioExplosao;
+    public GameObject alerta;
+    public Text textoAlerta;
 
 
 
@@ -68,9 +72,8 @@ public class BattleManager : MonoBehaviour
     {
 
         playerNum = PlayerPrefs.GetInt("turno");
-
-        //diminuir countdown dos ataques
-        naviosCountdownRefresh();
+        setTextAlerta("Player " + playerNum.ToString() + ":\nFaça seus ataques!");
+        
 
         //inserir quadrados
         inserirQuadrados();
@@ -102,6 +105,12 @@ public class BattleManager : MonoBehaviour
         Text textTemp = helperText.GetComponent<Text>();
         textTemp.text = texto;
         
+    }
+    public void setTextAlerta(string texto)
+    {
+
+        Text textTemp = textoAlerta.GetComponent<Text>();
+        textTemp.text = texto;
     }
 
     //funções de construção dos tabuleiros
@@ -354,21 +363,48 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
-    public void resetarAtaquesTabuleiro()
+    public void resetarAtaquesTabuleiro(bool full=false)
     {
 
         Image image;
         Color cores;
-        for (int i = 0; i < savedTargetsCoord.Count; i++)
+        if (full)
         {
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
 
-            image = quadTabuleiroEnemy[savedTargetsCoord[i][0], savedTargetsCoord[i][1]].GetComponent<Image>();
-            cores = image.color;
-            cores.r = 0f;
-            cores.g = 0f;
-            cores.b = 0f;
-            cores.a = 0f;
-            image.color = cores;
+                    image = quadTabuleiroEnemy[i, j].GetComponent<Image>();
+                    cores = image.color;
+                    cores.r = 0f;
+                    cores.g = 0f;
+                    cores.b = 0f;
+                    cores.a = 0f;
+                    image.color = cores;
+                    image = quadMeuTabuleiro[i, j].GetComponent<Image>();
+                    cores = image.color;
+                    cores.r = 0f;
+                    cores.g = 0f;
+                    cores.b = 0f;
+                    cores.a = 0f;
+                    image.color = cores;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < savedTargetsCoord.Count; i++)
+            {
+
+                image = quadTabuleiroEnemy[savedTargetsCoord[i][0], savedTargetsCoord[i][1]].GetComponent<Image>();
+                cores = image.color;
+                cores.r = 0f;
+                cores.g = 0f;
+                cores.b = 0f;
+                cores.a = 0f;
+                image.color = cores;
+            }
         }
         savedTargetsCoord.Clear();
         colocarAtaques("1");
@@ -462,6 +498,7 @@ public class BattleManager : MonoBehaviour
                 savedTargetsCoord.Add(new int[2] { quadradosParaAtivar[i][0], quadradosParaAtivar[i][1] });
                 image = quadTabuleiroEnemy[quadradosParaAtivar[i][0], quadradosParaAtivar[i][1]].GetComponent<Image>();
                 cores = image.color;
+                cores.r = 0;
                 cores.g = 255;
                 cores.a = 0.5f;
                 image.color = cores;
@@ -476,8 +513,26 @@ public class BattleManager : MonoBehaviour
 
 
     //funções relacionadas aos ataques
-    private void naviosCountdownRefresh()
+    private void ataquesCountdownRefresh()
     {
+        artilhariaSimplesBar = 1;
+
+        string[] myShipsInfos = PlayerPrefs.GetString("player" + playerNum.ToString()).Split('$');
+        string[] navio;
+        int temp;
+        for (int i=0;i< myShipsInfos.Length;i++)
+        {
+            navio = myShipsInfos[i].Split('#');
+            temp = int.Parse(navio[4]) - 1;
+            if (temp <0)
+            {
+                temp = 0;
+
+            }
+            navio[4] = temp.ToString();
+            myShipsInfos[i] = string.Join("#", navio);
+        }
+        PlayerPrefs.SetString("player" + playerNum.ToString(),string.Join("$", myShipsInfos));
 
     }
     private void AttacksInit()
@@ -524,28 +579,41 @@ public class BattleManager : MonoBehaviour
             switch (int.Parse(shipInfo[0]))
             {
                 case 2:
-                    artilhariaSimplesDano++;
-                break;
+                    if (int.Parse(shipInfo[6]) == 0)
+                    {
+                        artilhariaSimplesDano++;
+                    }
+                    break;
                 case 3:
-                    artilhariaSimplesDano++;
+                    if (int.Parse(shipInfo[6]) == 0)
+                    {
+                        artilhariaSimplesDano++;
+                    }
                     missilMax++;
-                    if (int.Parse(shipInfo[4]) == 0)
+                    if (int.Parse(shipInfo[4]) == 0 && int.Parse(shipInfo[6])==0)
                     {
                         missilNow++;
                     }
                     break;
                 case 4:
-                    artilhariaSimplesDano++;
+                    if (int.Parse(shipInfo[6]) == 0)
+                    {
+                        artilhariaSimplesDano++;
+                    }
                     artilhariaPesadaMax++;
-
                     pct = (float)(artilhariaPesadaCountdown - int.Parse(shipInfo[4])) / artilhariaPesadaCountdown;
+                    if (int.Parse(shipInfo[6]) == 1) { pct = 0; }
                     artilhariaPesadaNow.Add(pct);
                     break;
                 case 5:
-                    artilhariaSimplesDano++;
+                    if (int.Parse(shipInfo[6]) == 0)
+                    {
+                        artilhariaSimplesDano++;
+                    }
                     bombardeioMax++;
 
                     pct = (float)(bombardeioCountdown - int.Parse(shipInfo[4])) / bombardeioCountdown;
+                    if (int.Parse(shipInfo[6]) == 1) { pct = 0; }
                     bombardeioNow.Add(pct);
                     break;
             }
@@ -583,7 +651,6 @@ public class BattleManager : MonoBehaviour
         else
         {
             firstTargetSelected = false;
-            lockAllMouseEvents(); //travo todos os eventos de mouse, para depois só liberar ao fim da animação
             //lancarataques
             int dano = 0;
             bool navioExpostoMy = false;
@@ -614,10 +681,9 @@ public class BattleManager : MonoBehaviour
                     break;
                 case 4: // bombardeio
                     dano = bombardeioDano;
-                    Debug.Log(savedTargetsCoord.Count);
                     if (savedTargetsCoord.Count == 1) //cancelo o ataque pois clicou no mesmo quadrado
                     {
-                        unLockAllMouseEvents(); 
+                        firstTargetSelected = false;
                         return;
                     }
                     if (savedTargetsCoord.Count != bombardeioTamanho) //o jogador fez uma reta, porem não marcou 7 casa, então iremos completar
@@ -676,9 +742,13 @@ public class BattleManager : MonoBehaviour
             //repopula tabuleiros
             popularMeuTabuleiro();
             popularTabuleiroEnemy();
+            CriarExplosoes();
             //reseta os quadrados dos tabuleiros
             resetarAtaquesTabuleiro();
-            unselectAllAttacks();
+            if (checkVictory())
+            {
+                ativarAlertaVictory();
+            }
 
         }
 
@@ -693,7 +763,7 @@ public class BattleManager : MonoBehaviour
         string[,] newAtaquesToInsert = EfetuarDanoNoInimigo(dano, navioExpostoEnemy);
 
         SalvarAtaquesNoHistorico(newAtaquesToInsert);
-        CriarExplosoes();
+        unselectAllAttacks();
     }
     private void AtualizarMeusNaviosInfos(int navioTipo, bool navioExposto, int countDown)
     {
@@ -885,7 +955,27 @@ public class BattleManager : MonoBehaviour
             temp.transform.localScale = new Vector3(1f, 1f, 1f);
             temp.transform.localPosition = new Vector3((savedTargetsCoord[i][0] * 64)+32, (savedTargetsCoord[i][1] * -64) - 32, 0f);
         }
-        
+        audioExplosao.GetComponent<AudioSource>().Play();
+    }
+
+    private bool checkVictory()
+    {
+        string EnemyId = "1";
+        if (playerNum == 1)
+        {
+            EnemyId = "2";
+        }
+        string[] enemyShipsInfos = PlayerPrefs.GetString("player" + EnemyId).Split('$');
+        string[] navio;
+        for (int i=0;i< enemyShipsInfos.Length;i++)
+        {
+            navio = enemyShipsInfos[i].Split('#');
+            if (navio[6] == "0" && int.Parse(navio[0])>1) //verifico se é navio e se nao esta destruido 
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -901,12 +991,50 @@ public class BattleManager : MonoBehaviour
         firstTargetSelected = false;
         resetarAtaquesTabuleiro();
     }
-    private void lockAllMouseEvents()
-    {
 
+    //eventos dos botoes
+    public void endTurn()
+    {
+        GetComponent<AudioSource>().Play();
+        if (artilhariaSimplesBar == 1)
+        {
+            setText("Faça um ataque com o canhão simples!");
+        }
+        else
+        {
+            if (playerNum == 1) { playerNum = 2; PlayerPrefs.SetInt("turno", 2); } else { playerNum = 1; PlayerPrefs.SetInt("turno", 1); }
+            ataquesCountdownRefresh();
+            //reconfigura ataques btn
+            AttacksConfigs();
+            //repopula tabuleiros
+            popularMeuTabuleiro();
+            popularTabuleiroEnemy();
+            //reseta os quadrados dos tabuleiros
+            resetarAtaquesTabuleiro(true);
+
+
+
+            unselectAllAttacks();
+            setText("Escolha um ataque!");
+            setTextAlerta("Player "+ playerNum.ToString()+ ":\nFaça seus ataques!");
+            alerta.SetActive(true);
+        }
     }
-    private void unLockAllMouseEvents()
+    public void startTurn()
     {
 
+        if (playerNum == 0)//jogo encerrado!
+        {
+            SceneManager.LoadScene("Main");
+        }
+
+        GetComponent<AudioSource>().Play();
+        alerta.SetActive(false);
+    }
+    private void ativarAlertaVictory()
+    {
+        setTextAlerta(" Parabéns Player " + playerNum.ToString() + "!!!\nVocê ganhou o jogo!");
+        playerNum = 0;
+        alerta.SetActive(true);
     }
 }

@@ -152,6 +152,7 @@ public class SetShipsManager : MonoBehaviour {
     //função para o click do pronto
     public void finalizarPosicionamento()
     {
+        GetComponent<AudioSource>().Play();
         //verificar se existe algum quadrado vermelho
         navio navio;
         for (int i = 0; i < naviosObjs.Length; i++)
@@ -191,6 +192,14 @@ public class SetShipsManager : MonoBehaviour {
     }
     public void reloadScene()
     {
+
+        GetComponent<AudioSource>().Play();
+        StartCoroutine(mudarCena());
+    }
+    IEnumerator mudarCena()
+    {
+        yield return new WaitForSeconds(0.22f);
+
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
