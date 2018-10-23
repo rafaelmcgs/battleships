@@ -17,4 +17,9 @@ public class eventosAnimacao : MonoBehaviour {
     {
         objetos[num].SetActive(true);
     }
+    public void SelfDestroy()
+    {
+
+        Destroy(gameObject);
+    }
 }

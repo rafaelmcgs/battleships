@@ -9,7 +9,6 @@ public class tabuleiroEnemy : MonoBehaviour
     [HideInInspector]
     public bool isDraggin = false;
     [HideInInspector]
-    public bool enabled = true;
     private Vector3 dragMousePosiInicial;
     private BattleManager manager;
 
@@ -29,7 +28,7 @@ public class tabuleiroEnemy : MonoBehaviour
 
     public void mouseBeginDrag()
     {
-        
+        if (manager.canhaoSelected == 0) { return; }
         isDraggin = true;
         dragMousePosiInicial = Input.mousePosition;
         mira.transform.position = Input.mousePosition;
@@ -37,12 +36,14 @@ public class tabuleiroEnemy : MonoBehaviour
     }
     public void mouseEndDrag()
     {
+        if (manager.canhaoSelected == 0) { return; }
         isDraggin = false;
         mira.SetActive(false);
 
     }
     public void mouseDrag()
     {
+        if (manager.canhaoSelected == 0) { return; }
         // adiciono distancia pecorrida pelo mouse
         mira.transform.position = Input.mousePosition;
 
@@ -65,12 +66,14 @@ public class tabuleiroEnemy : MonoBehaviour
     }
     public void mouseDown()
     {
+        if (manager.canhaoSelected == 0) { return; }
         mira.SetActive(true);
         mira.transform.position = Input.mousePosition;
         snapMira();
     }
     public void mouseClick()
     {
+        if (manager.canhaoSelected == 0) { return; }
         mira.transform.position = Input.mousePosition;
         snapMira();
         manager.mouseClickAttack();

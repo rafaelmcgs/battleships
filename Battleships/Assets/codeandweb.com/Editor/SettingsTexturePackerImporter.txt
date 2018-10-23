@@ -3,16 +3,19 @@ importPivots: 1
 tpsheetFileNames:
 - Assets/Arts/BTNS/newgame/btn-newgame.tpsheet
 - Assets/Arts/BTNS/pronto/btn-pronto.tpsheet
+- Assets/Arts/explosao/explosao.tpsheet
 - Assets/Arts/Logo/logo.tpsheet
 - Assets/Arts/tabuleiro/water/waterTile.tpsheet
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
 textureFileNames:
 - Assets/Arts/BTNS/newgame/btn-newgame.png
 - Assets/Arts/BTNS/pronto/btn-pronto.png
+- Assets/Arts/explosao/explosao.png
 - Assets/Arts/Logo/logo.png
 - Assets/Arts/tabuleiro/water/waterTile.png
 - Assets/codeandweb.com/Example/SpriteSheet/sprites.png
 normalmapFileNames:
+- 
 - 
 - 
 - 

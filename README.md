@@ -17,8 +17,8 @@ As regras serão:
   - **1 Porta aviões** – 1x5 – Possui o ataque de artilharia simples e o bombardeio.
 * Os participantes atacarão **alternadamente em turnos** e em cada turno o jogador poderá lançar **quantos ataques quiser**, contanto que estejam **disponíveis**. Os ataques são:
   - **Artilharia Simples** - cooldown: 0 - tamanho: **1** - dano: somatório da quantidade de navios
-  - **Míssil balístico** - só pode ser usado 1 vez por cada navio - tamanho: **3x3** - dano: 15 - expõe a localização do navio
-  - **Artilharia pesada** - cooldown: 2 - tamanho **1** - dano: 15
+  - **Míssil balístico** - só pode ser usado 1 vez por cada navio - tamanho: **3x3** - dano: 15 - expõe a localização de uma fragata
+  - **Artilharia pesada** - cooldown: 2 - tamanho **1** - dano: 15 - expoe a localização completa do navio inimigo
   - **Bombardeio** - cooldown: 4 - tamanho **1x7** - dano: 15
 * O jogo acaba quando todos os **navios** de um jogador forem destruídos.
 
@@ -36,8 +36,15 @@ Programas utilizados no projeto:
 * Photoshop
 * Illustrator
 
+Nota para avaliador:
+* Para alterar a quantidade de navios no tabuleiro vá na cena **SetShips** e altere o GameObject **navios**.
+  -Adicione, remova ou mova os prefabs de navios ja criados e configurados
+  -Snap o navio corretamente
+* Para alterar regras da batalha, como dano e countdown, vá na cena **Battle**, GameObject "BattleManager" e modifique as variaveis do script anexado.
+
 
 Prints:
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena1.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena2.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena3.jpg?raw=true)
+

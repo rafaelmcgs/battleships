@@ -5,21 +5,6 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    public GameObject tabuleiroMe;
-    public GameObject tabuleiroEnemy;
-    public GameObject helperText;
-
-    public GameObject attack1;
-    public GameObject attack2;
-    public GameObject attack3;
-    public GameObject attack4;
-
-    public GameObject navio1Prefab;
-    public GameObject navio2Prefab;
-    public GameObject navio3Prefab;
-    public GameObject navio4Prefab;
-    public GameObject navio5Prefab;
-    public GameObject quadrado;
 
 
 
@@ -56,8 +41,22 @@ public class BattleManager : MonoBehaviour
     private List<int[]> savedTargetsCoord = new List<int[]>();
 
 
+    public GameObject tabuleiroMe;
+    public GameObject tabuleiroEnemy;
+    public GameObject helperText;
 
+    public GameObject attack1;
+    public GameObject attack2;
+    public GameObject attack3;
+    public GameObject attack4;
 
+    public GameObject navio1Prefab;
+    public GameObject navio2Prefab;
+    public GameObject navio3Prefab;
+    public GameObject navio4Prefab;
+    public GameObject navio5Prefab;
+    public GameObject quadrado;
+    public GameObject Explosao;
 
 
 
@@ -355,6 +354,123 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    public void resetarAtaquesTabuleiro()
+    {
+
+        Image image;
+        Color cores;
+        for (int i = 0; i < savedTargetsCoord.Count; i++)
+        {
+
+            image = quadTabuleiroEnemy[savedTargetsCoord[i][0], savedTargetsCoord[i][1]].GetComponent<Image>();
+            cores = image.color;
+            cores.r = 0f;
+            cores.g = 0f;
+            cores.b = 0f;
+            cores.a = 0f;
+            image.color = cores;
+        }
+        savedTargetsCoord.Clear();
+        colocarAtaques("1");
+        colocarAtaques("2");
+    }
+    public void ativarQuadradosMira(int x, int y)
+    {
+
+        Image image;
+        Color cores;
+        int[] temp = new int[2];
+
+        //reseto os quadrados
+
+        List<int[]> quadradosParaAtivar = new List<int[]>();
+        // são 3 situação de mira:
+        if (canhaoSelected == 2) //missil - formato cruz
+        {
+            quadradosParaAtivar.Add(new int[2] { x, y });
+            quadradosParaAtivar.Add(new int[2] { x + 1, y });
+            quadradosParaAtivar.Add(new int[2] { x - 1, y });
+            quadradosParaAtivar.Add(new int[2] { x, y + 1 });
+            quadradosParaAtivar.Add(new int[2] { x, y - 1 });
+
+
+
+        }
+        else if (canhaoSelected == 4 && firstTargetSelected) //linha reta - bombardeio
+        {
+            int tempValue;
+            if (
+                firstTargetCoord[1] == y ||
+                Mathf.Abs(firstTargetCoord[0] - x) >= Mathf.Abs(firstTargetCoord[1] - y)
+            )
+            {
+                //linha horizontal
+
+                for (int i = 0; i <= Mathf.Abs(firstTargetCoord[0] - x); i++)
+                {
+                    if (firstTargetCoord[0] < x)
+                    {//movimento da esquerda para direita
+                        tempValue = firstTargetCoord[0] + i;
+                    }
+                    else
+                    {//movimento da direita para esquerda
+                        tempValue = firstTargetCoord[0] - i;
+
+                    }
+                    quadradosParaAtivar.Add(new int[2] { tempValue, firstTargetCoord[1] });
+                }
+            }
+            else
+            {
+                //linha vertical
+                for (int i = 0; i <= Mathf.Abs(firstTargetCoord[1] - y); i++)
+                {
+                    if (firstTargetCoord[1] < y)
+                    {//movimento de cima para baixo
+                        tempValue = firstTargetCoord[1] + i;
+                    }
+                    else
+                    {//movimento de baixo para cima
+                        tempValue = firstTargetCoord[1] - i;
+
+                    }
+                    quadradosParaAtivar.Add(new int[2] { firstTargetCoord[0], tempValue });
+                }
+
+
+            }
+
+        }
+        else if (canhaoSelected != 0) //outra situação de canhão selecionado
+        {
+            quadradosParaAtivar.Add(new int[2] { x, y });
+        }
+
+        resetarAtaquesTabuleiro();
+        //adiciono cor nos quadrados
+        for (int i = 0; i < quadradosParaAtivar.Count; i++)
+        {
+            if (
+                (
+                    (canhaoSelected == 4 && i < bombardeioTamanho) ||
+                    canhaoSelected != 4
+                ) &&
+                (quadradosParaAtivar[i][0] >= 0 && quadradosParaAtivar[i][0] < 15 &&
+                quadradosParaAtivar[i][1] >= 0 && quadradosParaAtivar[i][1] < 15)
+            )
+            {
+                savedTargetsCoord.Add(new int[2] { quadradosParaAtivar[i][0], quadradosParaAtivar[i][1] });
+                image = quadTabuleiroEnemy[quadradosParaAtivar[i][0], quadradosParaAtivar[i][1]].GetComponent<Image>();
+                cores = image.color;
+                cores.g = 255;
+                cores.a = 0.5f;
+                image.color = cores;
+
+            }
+        }
+
+
+    }
 
 
 
@@ -363,17 +479,6 @@ public class BattleManager : MonoBehaviour
     private void naviosCountdownRefresh()
     {
 
-    }
-    public void unselectAllAttacks()
-    {
-        setText("Escolha um ataque!");
-        attack1.GetComponent<canhao>().unSelect();
-        attack2.GetComponent<canhao>().unSelect();
-        attack3.GetComponent<canhao>().unSelect();
-        attack4.GetComponent<canhao>().unSelect();
-        canhaoSelected = 0;
-        firstTargetSelected = false;
-        resetarAtaquesTabuleiro();
     }
     private void AttacksInit()
     {
@@ -463,123 +568,6 @@ public class BattleManager : MonoBehaviour
 
 
     }
-    public void resetarAtaquesTabuleiro()
-    {
-
-        Image image;
-        Color cores;
-        for (int i = 0; i < savedTargetsCoord.Count; i++)
-        {
-
-            image = quadTabuleiroEnemy[savedTargetsCoord[i][0], savedTargetsCoord[i][1]].GetComponent<Image>();
-            cores = image.color;
-            cores.r = 0f;
-            cores.g = 0f;
-            cores.b = 0f;
-            cores.a = 0f;
-            image.color = cores;
-        }
-        savedTargetsCoord.Clear();
-        colocarAtaques("1");
-        colocarAtaques("2");
-    }
-    public void ativarQuadradosMira(int x, int y)
-    {
-
-        Image image;
-        Color cores;
-        int[] temp = new int[2];
-
-        //reseto os quadrados
-
-        List<int[]> quadradosParaAtivar = new List<int[]>();
-        // são 3 situação de mira:
-        if (canhaoSelected == 2) //missil - formato cruz
-        {
-            quadradosParaAtivar.Add(new int[2] { x, y });
-            quadradosParaAtivar.Add(new int[2] { x + 1, y });
-            quadradosParaAtivar.Add(new int[2] { x - 1, y });
-            quadradosParaAtivar.Add(new int[2] { x, y+1 });
-            quadradosParaAtivar.Add(new int[2] { x, y-1 });
-
-
-
-        }
-        else if(canhaoSelected == 4 && firstTargetSelected) //linha reta - bombardeio
-        {
-            int tempValue;
-            if (
-                firstTargetCoord[1] == y ||
-                Mathf.Abs(firstTargetCoord[0] - x) >= Mathf.Abs(firstTargetCoord[1] - y)
-            )
-            {
-                //linha horizontal
-
-                for (int i = 0; i <= Mathf.Abs(firstTargetCoord[0]-x);i++)
-                {
-                    if (firstTargetCoord[0] < x)
-                    {//movimento da esquerda para direita
-                        tempValue = firstTargetCoord[0] + i;
-                    }
-                    else
-                    {//movimento da direita para esquerda
-                        tempValue = firstTargetCoord[0] - i;
-
-                    }
-                    quadradosParaAtivar.Add(new int[2] { tempValue, firstTargetCoord[1] });
-                }
-            }
-            else
-            {
-                //linha vertical
-                for (int i = 0; i <= Mathf.Abs(firstTargetCoord[1] - y); i++)
-                {
-                    if (firstTargetCoord[1] < y)
-                    {//movimento de cima para baixo
-                        tempValue = firstTargetCoord[1] + i;
-                    }
-                    else
-                    {//movimento de baixo para cima
-                        tempValue = firstTargetCoord[1] - i;
-
-                    }
-                    quadradosParaAtivar.Add(new int[2] { firstTargetCoord[0], tempValue });
-                }
-                
-
-            }
-            
-        }
-        else if (canhaoSelected != 0) //outra situação de canhão selecionado
-        {
-            quadradosParaAtivar.Add(new int[2] { x, y });
-        }
-
-        resetarAtaquesTabuleiro();
-        //adiciono cor nos quadrados
-        for (int i=0;i<quadradosParaAtivar.Count;i++)
-        {
-            if(
-                (
-                    (canhaoSelected == 4 && i < bombardeioTamanho) ||
-                    canhaoSelected != 4
-                ) &&
-                (quadradosParaAtivar[i][0] >= 0 && quadradosParaAtivar[i][0] < 15 &&
-                quadradosParaAtivar[i][1] >= 0 && quadradosParaAtivar[i][1] < 15)
-            )
-            {
-                savedTargetsCoord.Add(new int[2] { quadradosParaAtivar[i][0], quadradosParaAtivar[i][1] });
-                image = quadTabuleiroEnemy[quadradosParaAtivar[i][0], quadradosParaAtivar[i][1]].GetComponent<Image>();
-                cores = image.color;
-                cores.g = 255;
-                cores.a = 0.5f;
-                image.color = cores;
-
-            }
-        }
-
-
-    }
 
     public void mouseClickAttack()
     {
@@ -598,7 +586,8 @@ public class BattleManager : MonoBehaviour
             lockAllMouseEvents(); //travo todos os eventos de mouse, para depois só liberar ao fim da animação
             //lancarataques
             int dano = 0;
-            bool navioExposto = false;
+            bool navioExpostoMy = false;
+            bool navioExpostoEnemy = false;
             int countDown = 0;
             int navioTipo = 0;
 
@@ -612,12 +601,14 @@ public class BattleManager : MonoBehaviour
                 case 2: // missil
                     dano = missilDano;
                     //expor navio
-                    navioExposto = true;
+                    navioExpostoMy = true;
                     navioTipo = 3;
                     countDown = 99;
                     break;
                 case 3: // artilharia pesada
                     dano = artilhariaPesadaDano;
+                    //expoe navio inimigo se acertar
+                    navioExpostoEnemy = true;
                     navioTipo = 4;
                     countDown = artilhariaPesadaCountdown;
                     break;
@@ -679,7 +670,7 @@ public class BattleManager : MonoBehaviour
             }
             
 
-            registrarAtaque(dano, navioTipo, navioExposto, countDown);
+            registrarAtaque(dano, navioTipo, navioExpostoMy, navioExpostoEnemy, countDown);
             //configura ataques btn
             AttacksConfigs();
             //repopula tabuleiros
@@ -692,32 +683,18 @@ public class BattleManager : MonoBehaviour
         }
 
     }
-    private void registrarAtaque(int dano, int navioTipo, bool navioExposto, int countDown)
+    private void registrarAtaque(int dano, int navioTipo, bool navioExpostoMy, bool navioExpostoEnemy, int countDown)
     {
-        if (navioTipo == 0)
+        if (navioTipo != 0)
         {
-            return;
+            AtualizarMeusNaviosInfos(navioTipo, navioExpostoMy, countDown);
         }
-        AtualizarMeusNaviosInfos(navioTipo, navioExposto, countDown);
 
-        string[,] newAtaquesToInsert = EfetuarDanoNoInimigo(dano);
+        string[,] newAtaquesToInsert = EfetuarDanoNoInimigo(dano, navioExpostoEnemy);
 
         SalvarAtaquesNoHistorico(newAtaquesToInsert);
-
-        
-       
-
-
-
-
-            //string[] ataques = PlayerPrefs.GetString("player" + playerNum_ + "Ataques").Split('$');
-            /* separado por $
-             0 = x
-             1 = y
-             2 = tipo (0 = miss | 1 = acertou | 2 = destruido)
-             */
-
-        }
+        CriarExplosoes();
+    }
     private void AtualizarMeusNaviosInfos(int navioTipo, bool navioExposto, int countDown)
     {
         string[] navio;
@@ -773,7 +750,7 @@ public class BattleManager : MonoBehaviour
         myShipsInfos[melhorNavioIndex] = string.Join("#", navio);
         PlayerPrefs.SetString("player" + playerNum.ToString(), string.Join("$", myShipsInfos));
     }
-    private string[,]  EfetuarDanoNoInimigo(int dano)
+    private string[,]  EfetuarDanoNoInimigo(int dano, bool navioExposto)
     {
         string[,] newAtaquesToInsert = new string[savedTargetsCoord.Count, 3];
         string[] enemyShipsInfos;
@@ -820,6 +797,9 @@ public class BattleManager : MonoBehaviour
                     }
                     if (navioQuadradosCoord[0] == savedTargetsCoord[j][0] && navioQuadradosCoord[1] == savedTargetsCoord[j][1])
                     {
+                        if (navioExposto ) { //tiro de artilharia pesa expoe navio inimigo qd acertar
+                            navio[5] = "1";
+                        }
                         int newLife = int.Parse(navioQuadrados[k]) - dano;
                         newAtaquesToInsert[j, 2] = "1"; //acertou
                         if (newLife <= 0)
@@ -858,7 +838,7 @@ public class BattleManager : MonoBehaviour
         string[] ataqueTemp;
         string ataquesSave = "";
 
-        if (PlayerPrefs.GetString("player"+playerNum.ToString()+"Ataques") != "")
+        if (PlayerPrefs.GetString("player" + playerNum.ToString() + "Ataques") != "")
         {
             ataques = PlayerPrefs.GetString("player" + playerNum.ToString() + "Ataques").Split('$');
         }
@@ -893,8 +873,34 @@ public class BattleManager : MonoBehaviour
         }
         PlayerPrefs.SetString("player" + playerNum.ToString() + "Ataques", ataquesSave);
     }
+    private void CriarExplosoes()
+    {
+
+        GameObject temp;
+        for (int i = 0; i < savedTargetsCoord.Count; i++)
+        {
+
+            temp = Instantiate(Explosao) as GameObject;
+            temp.transform.parent = tabuleiroEnemy.transform;
+            temp.transform.localScale = new Vector3(1f, 1f, 1f);
+            temp.transform.localPosition = new Vector3((savedTargetsCoord[i][0] * 64)+32, (savedTargetsCoord[i][1] * -64) - 32, 0f);
+        }
+        
+    }
 
 
+
+    public void unselectAllAttacks()
+    {
+        setText("Escolha um ataque!");
+        attack1.GetComponent<canhao>().unSelect();
+        attack2.GetComponent<canhao>().unSelect();
+        attack3.GetComponent<canhao>().unSelect();
+        attack4.GetComponent<canhao>().unSelect();
+        canhaoSelected = 0;
+        firstTargetSelected = false;
+        resetarAtaquesTabuleiro();
+    }
     private void lockAllMouseEvents()
     {
 
