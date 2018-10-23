@@ -253,18 +253,18 @@ public class navio : MonoBehaviour
             {
                 image = quadrados[i].GetComponent<Image>();
                 var tempColor = image.color;
-            if (exposto_)
-            {
-                tempColor.a = 0.5f;
-                tempColor.r = 1f;
-                tempColor.g = 1f;
-                tempColor.b = 1f;
-            }
-            else
-            {
-                tempColor.a = 0f;
+                if (exposto_)
+                {
+                    tempColor.a = 0.5f;
+                    tempColor.r = 1f;
+                    tempColor.g = 1f;
+                    tempColor.b = 1f;
+                }
+                else
+                {
+                    tempColor.a = 0f;
 
-            }
+                }
                 image.color = tempColor;
             }
         
@@ -281,7 +281,7 @@ public class navio : MonoBehaviour
             manager.RemoveShipPosition(managerId);
             hideQuadrados();
             dragMousePosiInicial = Input.mousePosition;
-            dragObjectPosiInicial = transform.localPosition;
+            dragObjectPosiInicial = transform.position;
         }
     }
     public void drag()
@@ -290,11 +290,13 @@ public class navio : MonoBehaviour
         {
             // estou trabalhando com local position, portanto eu corrigi o movimento em relação a escala do tabuleiro
             Vector3 temp = (Input.mousePosition - dragMousePosiInicial);
-            temp.x = temp.x;
-            temp.y = temp.y;
+
+            //adiciono uma margem para o barco não ficar embaixo do dedo
+            temp.y = temp.y + 40;
 
             // adiciono distancia pecorrida pelo mouse
-            Vector3 tempPosi = dragObjectPosiInicial + temp;
+            transform.position = dragObjectPosiInicial + temp;
+            Vector3 tempPosi = transform.localPosition;
 
             // verifico e corrijo posição de acordo com os limites do tabuleiro 15x15
             tempPosi = checkAndReturnPosition(tempPosi);
@@ -330,18 +332,18 @@ public class navio : MonoBehaviour
     //funções para setar e pegar infos
     public string getStringInfos()
     {
-        /*
-         [
-             0 = size (o que define o tipo de navio)
-             1 = posicao X
-             2 = posicao Y
-             3 = posicao Vertical ( 0=horizontal | 1=vertical)
-             4 = coutdown
-             5 = exposto ( 0=n | 1=s)
-             6 = destruido ( 0=n | 1=s)
-             7 = array da vida dosquadrados
-         ]
-        */
+        /* separado por #
+            [
+                0 = size (o que define o tipo de navio)
+                1 = posicao X
+                2 = posicao Y
+                3 = posicao Vertical ( 0=horizontal | 1=vertical)
+                4 = coutdown
+                5 = exposto ( 0=n | 1=s)
+                6 = destruido ( 0=n | 1=s)
+                7 = array da vida dosquadrados // separado por :
+            ]
+            */
         string verticalTemp = "0";
         if (getVertical())
         {
@@ -364,22 +366,7 @@ public class navio : MonoBehaviour
     }
 
     
-    public void setQuadByInfos(string infos)
-    {
 
-        string[] quadArray = infos.Split(':');
-        for (int i = 0; i < quadArray.Length; i++)
-        {
-            if (quadArray[i] == "0")
-            {
-                setQuadradoRed(i);
-            }
-            else if (quadArray[i] != "15")
-            {
-                setQuadradoYellow(i);
-            }
-        }
-    }
     public void setDestroyed(bool destroyed_)
     {
         destroyed = destroyed_;
