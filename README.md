@@ -39,9 +39,10 @@ Programas utilizados no projeto:
 * Premiere
 
 Nota para avaliador:
+* Nota-se que os ataques estão totalmente vinculados aos navios
 * Para alterar a quantidade de navios no tabuleiro vá na cena **SetShips** e altere o GameObject **navios**.
-  -Adicione, remova ou mova os prefabs de navios ja criados e configurados
-  -Snap o navio corretamente
+  - Adicione, remova ou mova os prefabs de navios ja criados e configurados
+  - Snap o navio corretamente  
 * Para alterar regras da batalha, como dano e countdown, vá na cena **Battle**, GameObject "BattleManager" e modifique as variaveis do script anexado.
 
 
@@ -49,4 +50,6 @@ Prints:
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena1.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena2.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena3.jpg?raw=true)
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena4.jpg?raw=true)
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena5.jpg?raw=true)
 

@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
 
 
     private int playerNum;
+    //sao os quadrados do tabuleiro, um acesso rapido para modificar cor
     private GameObject[,] quadTabuleiroEnemy = new GameObject[15, 15];
     private GameObject[,] quadMeuTabuleiro = new GameObject[15, 15];
 
@@ -30,20 +31,24 @@ public class BattleManager : MonoBehaviour
     [HideInInspector]
     public int bombardeioMax = 0;
 
-    private int missilNow = 0;
+    private int missilNow = 0; 
     private List<float> artilhariaPesadaNow = new List<float>();
     private List<float> bombardeioNow = new List<float>();
     private float artilhariaSimplesBar = 1;
 
     [HideInInspector]
     public int canhaoSelected = 0;
+    //variaveis para armazenar o primeiro clique do bombardeio
     private bool firstTargetSelected = false;
     private int[] firstTargetCoord = new int[2] {99,99 };
-    private List<int[]> savedTargetsCoord = new List<int[]>();
+    //variavel global q caminha entre todas funções do ataque!
+    //cuidado ao chamar unselectattacks
+    private List<int[]> savedTargetsCoord = new List<int[]>(); 
 
 
     public GameObject tabuleiroMe;
     public GameObject tabuleiroEnemy;
+    public GameObject tabuleiroEnemyNavios;
     public GameObject helperText;
 
     public GameObject attack1;
@@ -135,7 +140,7 @@ public class BattleManager : MonoBehaviour
                 image.color = colorTemp;
 
                 quadTabuleiroEnemy[i, j] = Instantiate(quadrado) as GameObject;
-                quadTabuleiroEnemy[i, j].transform.parent = tabuleiroEnemy.transform;
+                quadTabuleiroEnemy[i, j].transform.parent = tabuleiroEnemyNavios.transform;
                 quadTabuleiroEnemy[i, j].transform.localScale = new Vector3(1f, 1f, 1f);
                 quadTabuleiroEnemy[i, j].transform.localPosition = new Vector3(i * 64, j * -64, 0f);
                 image = quadTabuleiroEnemy[i, j].GetComponent<Image>();
@@ -148,6 +153,9 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    
+    //insere os navios no tabuleiro do jogador da partida
+    //unir no futuro com popular tabuleiro enemy
     private void popularMeuTabuleiro()
     {
         
@@ -304,7 +312,7 @@ public class BattleManager : MonoBehaviour
                     tempY = 64 * (int.Parse(shipInfo[2]) - 1) * -1;
                     tempAngle = 90f;
                 }
-                tempShip.transform.parent = tabuleiroEnemy.transform;
+                tempShip.transform.parent = tabuleiroEnemyNavios.transform;
                 tempShip.transform.localScale = new Vector3(1f, 1f, 1f);
                 tempShip.transform.localPosition = new Vector3(tempX, tempY, 0f);
                 tempShip.transform.localEulerAngles = new Vector3(0f, 0f, tempAngle);
@@ -317,6 +325,7 @@ public class BattleManager : MonoBehaviour
 
 
     }
+    //marcações dos quadrados
     private void colocarAtaques(string playerNum_)
     {
         /* separado por $
@@ -410,6 +419,7 @@ public class BattleManager : MonoBehaviour
         colocarAtaques("1");
         colocarAtaques("2");
     }
+    //eventos disparados no tabuleiro chamam este
     public void ativarQuadradosMira(int x, int y)
     {
 
@@ -513,6 +523,7 @@ public class BattleManager : MonoBehaviour
 
 
     //funções relacionadas aos ataques
+    //todo inicio de turno essa função é chamada para o jogador, diminui 1 no countdown
     private void ataquesCountdownRefresh()
     {
         artilhariaSimplesBar = 1;
@@ -535,6 +546,7 @@ public class BattleManager : MonoBehaviour
         PlayerPrefs.SetString("player" + playerNum.ToString(),string.Join("$", myShipsInfos));
 
     }
+    //inicializa os canhoes
     private void AttacksInit()
     {
 
@@ -543,6 +555,7 @@ public class BattleManager : MonoBehaviour
         attack3.GetComponent<canhao>().SetShipsManager(this);
         attack4.GetComponent<canhao>().SetShipsManager(this);
     }
+    //configura os canhoes
     private void AttacksConfigs()
     {
 
@@ -626,8 +639,6 @@ public class BattleManager : MonoBehaviour
         attack4.GetComponent<canhao>().setBarsQtd(bombardeioMax);
 
         //seta a quantidade
-        Debug.Log("max" + missilMax.ToString());
-        Debug.Log("now" + missilNow.ToString());
         attack1.GetComponent<canhao>().setBarsValues(new List<float>() { artilhariaSimplesBar });
         attack2.GetComponent<canhao>().removeCartuchos(missilMax,missilNow);
         
@@ -637,6 +648,7 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    //evento de mouse disparado no tabuleiro
     public void mouseClickAttack()
     {
         if (canhaoSelected == 4 && !firstTargetSelected)
@@ -743,6 +755,7 @@ public class BattleManager : MonoBehaviour
             popularMeuTabuleiro();
             popularTabuleiroEnemy();
             CriarExplosoes();
+            unselectAllAttacks();
             //reseta os quadrados dos tabuleiros
             resetarAtaquesTabuleiro();
             if (checkVictory())
@@ -753,6 +766,7 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+    //função que processa o ataque
     private void registrarAtaque(int dano, int navioTipo, bool navioExpostoMy, bool navioExpostoEnemy, int countDown)
     {
         if (navioTipo != 0)
@@ -763,8 +777,8 @@ public class BattleManager : MonoBehaviour
         string[,] newAtaquesToInsert = EfetuarDanoNoInimigo(dano, navioExpostoEnemy);
 
         SalvarAtaquesNoHistorico(newAtaquesToInsert);
-        unselectAllAttacks();
     }
+    //dividi a função do ataque em diversas partes para facilitar compreensão
     private void AtualizarMeusNaviosInfos(int navioTipo, bool navioExposto, int countDown)
     {
         string[] navio;
@@ -945,7 +959,6 @@ public class BattleManager : MonoBehaviour
     }
     private void CriarExplosoes()
     {
-
         GameObject temp;
         for (int i = 0; i < savedTargetsCoord.Count; i++)
         {
@@ -957,7 +970,6 @@ public class BattleManager : MonoBehaviour
         }
         audioExplosao.GetComponent<AudioSource>().Play();
     }
-
     private bool checkVictory()
     {
         string EnemyId = "1";

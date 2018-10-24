@@ -563,7 +563,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1334, y: 750}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -824,6 +824,106 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 224955626}
   m_CullTransparentMesh: 0
+--- !u!1001 &262340414
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -32
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224529042340008534, guid: 38e9bc7281bae71429fbeda7c619d0a1,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38e9bc7281bae71429fbeda7c619d0a1, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &313703285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +1130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 522496211}
-  - component: {fileID: 522496212}
   m_Layer: 5
   m_Name: navios
   m_TagString: Untagged
@@ -1056,19 +1155,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &522496212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 522496210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98f53072aba25c04f9110d460b5d51f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mira: {fileID: 1835825938}
-  isDraggin: 0
 --- !u!1 &545156594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,7 +1195,8 @@ MonoBehaviour:
   bombardeioMax: 0
   canhaoSelected: 0
   tabuleiroMe: {fileID: 369277492}
-  tabuleiroEnemy: {fileID: 522496210}
+  tabuleiroEnemy: {fileID: 1171609288}
+  tabuleiroEnemyNavios: {fileID: 522496210}
   helperText: {fileID: 224955626}
   attack1: {fileID: 997510662}
   attack2: {fileID: 1040862977}
@@ -1661,6 +1748,16 @@ Prefab:
         type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224640853342220848, guid: bac2b9abd74c781499874c4b426fa350,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -39.999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 224640853342220848, guid: bac2b9abd74c781499874c4b426fa350,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 22.000069
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bac2b9abd74c781499874c4b426fa350, type: 2}
@@ -2858,17 +2955,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1375384527 stripped
+--- !u!1 &1171609288 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1880204059358786, guid: bac2b9abd74c781499874c4b426fa350,
+  m_CorrespondingSourceObject: {fileID: 1952642570681932, guid: bac2b9abd74c781499874c4b426fa350,
     type: 2}
   m_PrefabInternal: {fileID: 786383173}
---- !u!114 &1375384531
+--- !u!114 &1171609289
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1375384527}
+  m_GameObject: {fileID: 1171609288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f53072aba25c04f9110d460b5d51f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mira: {fileID: 1835825938}
+  isDraggin: 0
+--- !u!114 &1171609290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1171609288}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
@@ -2879,7 +2989,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 522496212}
+        - m_Target: {fileID: 1171609289}
           m_MethodName: mouseDrag
           m_Mode: 1
           m_Arguments:
@@ -2896,7 +3006,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 522496212}
+        - m_Target: {fileID: 1171609289}
           m_MethodName: mouseBeginDrag
           m_Mode: 1
           m_Arguments:
@@ -2913,7 +3023,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 522496212}
+        - m_Target: {fileID: 1171609289}
           m_MethodName: mouseEndDrag
           m_Mode: 1
           m_Arguments:
@@ -2930,7 +3040,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 522496212}
+        - m_Target: {fileID: 1171609289}
           m_MethodName: mouseClick
           m_Mode: 1
           m_Arguments:
@@ -2947,7 +3057,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 522496212}
+        - m_Target: {fileID: 1171609289}
           m_MethodName: mouseDown
           m_Mode: 1
           m_Arguments:
