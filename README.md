@@ -50,6 +50,6 @@ Prints:
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena1.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena2.jpg?raw=true)
 ![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena3.jpg?raw=true)
-![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena4.jpg?raw=true)
-![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena5.jpg?raw=true)
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena4.png?raw=true)
+![N|Solid](https://github.com/rafaelmcgs/battleships/blob/master/Referencias/prints/cena5.png?raw=true)
 
