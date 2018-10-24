@@ -231,7 +231,7 @@ public class BattleManager : MonoBehaviour
             //correção da posição y se estiver vertical, pois o archorpoint esta no canto inferior esquerdo
             if (int.Parse(shipInfo[3]) == 1)
             {
-                tempY = 64 * (int.Parse(shipInfo[2]) - 1) * -1;
+                tempY = 64 * (int.Parse(shipInfo[2]) + 1) * -1;
                 tempAngle = 90f;
             }
             tempShip.transform.parent = tabuleiroMe.transform;
@@ -309,7 +309,7 @@ public class BattleManager : MonoBehaviour
                 //correção da posição y se estiver vertical, pois o archorpoint esta no canto inferior esquerdo
                 if (int.Parse(shipInfo[3]) == 1)
                 {
-                    tempY = 64 * (int.Parse(shipInfo[2]) - 1) * -1;
+                    tempY = 64 * (int.Parse(shipInfo[2])+1) * -1;
                     tempAngle = 90f;
                 }
                 tempShip.transform.parent = tabuleiroEnemyNavios.transform;
