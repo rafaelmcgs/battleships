@@ -1184,10 +1184,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   artilhariaPesadaDano: 15
-  artilhariaPesadaCountdown: 2
-  missilDano: 15
-  bombardeioDano: 15
-  bombardeioCountdown: 3
+  artilhariaPesadaCountdown: 1
+  missilDano: 10
+  bombardeioDano: 10
+  bombardeioCountdown: 2
   bombardeioTamanho: 7
   artilhariaSimplesDano: 0
   missilMax: 0

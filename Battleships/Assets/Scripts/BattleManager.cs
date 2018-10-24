@@ -534,13 +534,22 @@ public class BattleManager : MonoBehaviour
         for (int i=0;i< myShipsInfos.Length;i++)
         {
             navio = myShipsInfos[i].Split('#');
+            //countdown
             temp = int.Parse(navio[4]) - 1;
-            if (temp <0)
+            if (temp < 0)
             {
                 temp = 0;
 
             }
             navio[4] = temp.ToString();
+            //exposição
+            temp = int.Parse(navio[5]) - 1;
+            if (temp < 0)
+            {
+                temp = 0;
+
+            }
+            navio[5] = temp.ToString();
             myShipsInfos[i] = string.Join("#", navio);
         }
         PlayerPrefs.SetString("player" + playerNum.ToString(),string.Join("$", myShipsInfos));
@@ -682,7 +691,7 @@ public class BattleManager : MonoBehaviour
                     //expor navio
                     navioExpostoMy = true;
                     navioTipo = 3;
-                    countDown = 99;
+                    countDown = 1;
                     break;
                 case 3: // artilharia pesada
                     dano = artilhariaPesadaDano;

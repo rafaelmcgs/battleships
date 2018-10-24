@@ -17,9 +17,9 @@ As regras serão:
   - **1 Porta aviões** – 1x5 – Possui o ataque de artilharia simples e o bombardeio.
 * Os participantes atacarão **alternadamente em turnos** e em cada turno o jogador poderá lançar **quantos ataques quiser**, contanto que estejam **disponíveis**. Os ataques são:
   - **Artilharia Simples** - cooldown: 0 - tamanho: **1** - dano: somatório da quantidade de navios
-  - **Míssil balístico** - só pode ser usado 1 vez por cada navio - tamanho: **3x3** - dano: 15 - expõe a localização de uma fragata
-  - **Artilharia pesada** - cooldown: 2 - tamanho **1** - dano: 15 - expoe a localização completa do navio inimigo
-  - **Bombardeio** - cooldown: 2 - tamanho **1x7** - dano: 15
+  - **Míssil balístico** - só pode ser usado 1 vez por cada navio - tamanho: **3x3** - dano: 10 - expõe a localização de uma fragata por 1 rodada
+  - **Artilharia pesada** - cooldown: 2 - tamanho **1** - dano: 15 - expoe a localização completa do navio inimigo por 1 rodada
+  - **Bombardeio** - cooldown: 2 - tamanho **1x7** - dano: 10
 * O jogo acaba quando todos os **navios** de um jogador forem destruídos.
 
 O projeto possuirá 3 cenas:
